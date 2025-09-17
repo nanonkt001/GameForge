@@ -1,0 +1,11 @@
+pragma solidity ^0.8.20;
+
+contract LootBox {
+    event Opened(address indexed player, uint256 reward);
+
+    function openBox() external payable {
+        require(msg.value == 0.01 ether, "Box costs 0.01 ETH");
+        uint256 reward = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100;
+        emit Opened(msg.sender, reward);
+    }
+}
